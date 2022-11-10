@@ -18,7 +18,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       _onLoadMoreStarted,
       transformer: (events, mapper) => events.switchMap(mapper),
     );
-    // on<ItemSelectChanged>(_onSelectChanged);
   }
 
   void _onLoadStarted(ItemLoadStarted event, Emitter<ItemState> emit) async {

@@ -6,13 +6,13 @@ import 'package:gym/ui/widgets/main_app_bar.dart';
 
 import '../../states/theme/theme_cubit.dart';
 
-class PokeballBackground extends StatelessWidget {
+class AppBackground extends StatelessWidget {
   static const double _pokeballWidthFraction = 0.664;
 
   final Widget child;
   final Widget? floatingActionButton;
 
-  const PokeballBackground({
+  const AppBackground({
     Key? key,
     required this.child,
     this.floatingActionButton,

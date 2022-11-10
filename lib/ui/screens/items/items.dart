@@ -8,7 +8,7 @@ import 'package:gym/core/extensions/animation.dart';
 import 'package:gym/states/item/item_bloc.dart';
 import 'package:gym/states/item/item_selector.dart';
 import 'package:gym/ui/widgets/main_app_bar.dart';
-import 'package:gym/ui/widgets/pokeball_background.dart';
+import 'package:gym/ui/widgets/app_background.dart';
 import 'package:gym/ui/widgets/pokemon_refresh_control.dart';
 import 'package:gym/states/item/item_event.dart';
 import 'package:gym/states/item/item_state.dart';
@@ -31,7 +31,7 @@ class ItemsScreen extends StatefulWidget {
 class _ItemsScreenState extends State<ItemsScreen> {
   @override
   Widget build(BuildContext context) {
-    return PokeballBackground(
+    return AppBackground(
       child: Stack(
         children: [
           _ItemGrid(),
