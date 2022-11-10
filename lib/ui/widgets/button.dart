@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym/configs/colors.dart';
+import 'package:gym/states/theme/theme_cubit.dart';
 
 class RadialButton extends StatelessWidget {
   final String text;
@@ -15,6 +18,8 @@ class RadialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
+    var isDark = themeCubit.isDark;
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -23,12 +28,15 @@ class RadialButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: color,
+            backgroundColor:  !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           ),
           onPressed: () => press(),
           child: Text(
             text,
+            style: TextStyle(
+              color: isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5)
+            ),
           )
         ),
       ),

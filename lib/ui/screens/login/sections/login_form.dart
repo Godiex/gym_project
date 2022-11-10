@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym/configs/images.dart';
 import 'package:gym/ui/screens/login/sections/register_form.dart';
 import 'package:gym/ui/widgets/app_background.dart';
 
+import '../../../../configs/colors.dart';
 import '../../../../domain/entities/user.dart';
+import '../../../../states/theme/theme_cubit.dart';
 import '../../../widgets/Inputs.dart';
 import '../../../widgets/button.dart';
 import '../../../widgets/dialog.dart';
@@ -17,7 +21,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
     List<User> users = [];
 
     void registerUser(context) async{
@@ -38,7 +42,7 @@ class LoginForm extends StatelessWidget {
         }
       }
     }
-
+    var isDark = themeCubit.isDark;
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -48,8 +52,9 @@ class LoginForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image(
-                image: const AssetImage('assets/images/logo_login.png'),
-                height: size.height * 0.31,
+                image: AppImages.gym_logo,
+                height: size.height * 0.4,
+                color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
               ),
               RadialInput(
                 controller: userNameController,
@@ -60,16 +65,16 @@ class LoginForm extends StatelessWidget {
               ),
               RadialInput(
                 controller: passwordController,
-                color: Colors.white,
+                color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
                 icon: Icons.lock,
                 label: "Contraseña",
                 obscureText: true,
               ),
               RadialButton(
-                  color: Colors.black,
+                  color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
                   text: "Entrar",
                   press: login,
-                  textColor: Colors.white
+                  textColor: !isDark ? Colors.black.withOpacity(0.5) : AppColors.whiteGrey
               ),
               Padding(
               padding: const EdgeInsets.all(5.0),
@@ -94,21 +99,23 @@ class LoginDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
+    var isDark = themeCubit.isDark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const Text(
+         Text(
           "¿Aun no tienes cuenta? ",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: !isDark ? Colors.black.withOpacity(0.5) : AppColors.whiteGrey),
         ),
         GestureDetector(
           onTap: () => {
             registerUser(context, )
           },
-          child: const Text(
+          child: Text(
             "Registrate Aca",
             style: TextStyle(
-              color: Colors.black,
+              color: !isDark ? Colors.black.withOpacity(0.5) : AppColors.whiteGrey,
               fontWeight: FontWeight.bold,
             ),
           ),

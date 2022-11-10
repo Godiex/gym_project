@@ -12,6 +12,7 @@ class AppImages {
   static const squirtle = _Image('squirtle.png');
   static const pokeball = _Image('pokeball.png');
   static const male = _Image('male.png');
+  static const gym_logo = _Image('gym_logo.png');
   static const female = _Image('female.png');
   static const dotted = _Image('dotted.png');
   static const thumbnail = _Image('thumbnail.png');
@@ -23,6 +24,7 @@ class AppImages {
     await precacheImage(squirtle, context);
     await precacheImage(pokeball, context);
     await precacheImage(male, context);
+    await precacheImage(gym_logo, context);
     await precacheImage(female, context);
     await precacheImage(dotted, context);
     await precacheImage(thumbnail, context);

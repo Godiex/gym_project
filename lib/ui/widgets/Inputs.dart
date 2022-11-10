@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../configs/colors.dart';
+import '../../states/theme/theme_cubit.dart';
 
 // ignore: must_be_immutable
 class TextInput {
@@ -80,7 +84,6 @@ class TextFieldContainer extends StatelessWidget {
 }
 
 class RadialInput extends StatelessWidget {
-
   final TextEditingController controller;
   final String label;
   final Color color;
@@ -97,17 +100,23 @@ class RadialInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
+    var isDark = themeCubit.isDark;
     return TextFieldContainer(
       child: TextField(
         controller: controller,
         obscureText: obscureText,
+        style: TextStyle(color: Colors.black.withOpacity(0.5)),
         decoration: InputDecoration(
             icon: Icon(
               icon,
-              color: Colors.grey[700],
+              color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
             ),
             filled: true,
             hintText: label,
+            hintStyle: TextStyle(
+              color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5)
+            ),
             fillColor: Colors.transparent,
             border: InputBorder.none,
             suffix: GestureDetector(
