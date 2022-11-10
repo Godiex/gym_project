@@ -33,6 +33,9 @@ class LoginForm extends StatelessWidget {
     }
 
     void login(){
+      if(passwordController.text.isEmpty && userNameController.text.isEmpty){
+        globalDialog.seeDialogError(context, 'Por favor llene todos los campos');
+      }
       if(passwordController.text.isNotEmpty && userNameController.text.isNotEmpty){
         int exist = users.indexWhere((user) => user.password == passwordController.text && user.userName == userNameController.text);
         if(exist == -1){
