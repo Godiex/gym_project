@@ -56,7 +56,7 @@ class ItemCard extends StatelessWidget {
           fit: BoxFit.contain,
           alignment: Alignment.bottomRight,
           placeholder: (context, url) => Image(
-            image: AppImages.bulbasaur,
+            image: AppImages.male,
             width: itemSize,
             height: itemSize,
             color: Colors.black12,

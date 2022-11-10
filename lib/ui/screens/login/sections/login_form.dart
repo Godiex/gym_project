@@ -33,7 +33,15 @@ class LoginForm extends StatelessWidget {
     }
 
     void login(){
-      AppNavigator.push(Routes.home);
+      if(passwordController.text.isNotEmpty && userNameController.text.isNotEmpty){
+        int exist = users.indexWhere((user) => user.password == passwordController.text && user.userName == userNameController.text);
+        if(exist == -1){
+          globalDialog.seeDialogError(context, 'No existe el usuario');
+        }
+        else{
+          AppNavigator.push(Routes.home);
+        }
+      }
     }
 
     var isDark = themeCubit.isDark;
