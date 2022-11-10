@@ -28,14 +28,14 @@ class RadialButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor:  !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
+            backgroundColor: Colors.black.withOpacity(0.5),
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           ),
           onPressed: () => press(),
           child: Text(
             text,
             style: TextStyle(
-              color: isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5)
+              color: AppColors.whiteGrey
             ),
           )
         ),

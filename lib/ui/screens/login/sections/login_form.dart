@@ -6,6 +6,7 @@ import 'package:gym/ui/widgets/app_background.dart';
 
 import '../../../../configs/colors.dart';
 import '../../../../domain/entities/user.dart';
+import '../../../../routes.dart';
 import '../../../../states/theme/theme_cubit.dart';
 import '../../../widgets/Inputs.dart';
 import '../../../widgets/button.dart';
@@ -32,18 +33,24 @@ class LoginForm extends StatelessWidget {
     }
 
     void login(){
-      if(passwordController.text.isNotEmpty && userNameController.text.isNotEmpty){
-        int exist = users.indexWhere((user) => user.password == passwordController.text && user.userName == userNameController.text);
-        if(exist == -1){
-          globalDialog.seeDialogError(context, 'No existe el usuario');
-        }
-        else{
-          Navigator.pushNamed(context, 'listview2');
-        }
-      }
+      AppNavigator.push(Routes.items);
     }
+
     var isDark = themeCubit.isDark;
     Size size = MediaQuery.of(context).size;
+
+    Widget _buildTitle() {
+      return Container(
+          child: Text(
+            'Inicio de sesion',
+            style: TextStyle(
+              fontSize: 30,
+              height: 1.6,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+      );
+    }
 
     return Scaffold(
       body: AppBackground(
@@ -51,10 +58,28 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                      onPressed: () {
+                        themeCubit.toggleTheme();
+                      },
+                      padding: EdgeInsets.only(
+                        left: 28,
+                      ),
+                      icon: Icon(
+                        isDark ? Icons.wb_sunny_outlined : Icons.dark_mode_outlined,
+                        color: isDark ? Colors.yellow : Colors.black,
+                        size: 25,
+                      )),
+                ),
+              ),
+              _buildTitle(),
               Image(
                 image: AppImages.gym_logo,
                 height: size.height * 0.4,
-                color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.5),
               ),
               RadialInput(
                 controller: userNameController,

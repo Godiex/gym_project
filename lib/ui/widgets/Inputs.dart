@@ -103,22 +103,28 @@ class RadialInput extends StatelessWidget {
     var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
     var isDark = themeCubit.isDark;
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
+
         controller: controller,
         obscureText: obscureText,
-        style: TextStyle(color: Colors.black.withOpacity(0.5)),
+        style: TextStyle(
+            color: Colors.black.withOpacity(0.5),
+        ),
         decoration: InputDecoration(
             icon: Icon(
               icon,
-              color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.5),
             ),
             filled: true,
             hintText: label,
             hintStyle: TextStyle(
-              color: !isDark ? AppColors.whiteGrey : Colors.black.withOpacity(0.5)
+              color: Colors.black.withOpacity(0.5)
             ),
             fillColor: Colors.transparent,
-            border: InputBorder.none,
+            border: isDark ? InputBorder.none : null,
+            focusedBorder: isDark ? null :  OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.black, width: 2.0),
+            ),
             suffix: GestureDetector(
               child: const Icon(Icons.close),
               onTap: () {
