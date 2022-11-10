@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:gym/core/fade_page_route.dart';
+import 'package:gym/ui/screens/home/home.dart';
 import 'package:gym/ui/screens/items/items.dart';
 import 'package:gym/ui/screens/login/login.dart';
 
-enum Routes { items, login }
+enum Routes { login, customers, plans, metrics, items, subscription, home }
 
 class _Paths {
-  static const String itemsList = '/home/items';
   static const String login = '/login';
+  static const String customers = '/customers';
+  static const String plans = '/plans';
+  static const String metrics = '/metrics';
+  static const String items = '/items';
+  static const String subscription = '/subscription';
+  static const String home = '/home';
 
   static const Map<Routes, String> _pathMap = {
     Routes.login: _Paths.login,
-    Routes.items: _Paths.itemsList
+    Routes.customers: _Paths.customers,
+    Routes.plans: _Paths.plans,
+    Routes.metrics: _Paths.metrics,
+    Routes.items: _Paths.items,
+    Routes.subscription: _Paths.subscription,
+    Routes.home: _Paths.home
   };
 
   static String of(Routes route) => _pathMap[route] ?? login;
@@ -26,7 +37,19 @@ class AppNavigator {
       case _Paths.login:
         return FadeRoute(page: LoginScreen());
 
-      case _Paths.itemsList:
+      case _Paths.home:
+        return FadeRoute(page: HomeScreen());
+
+      case _Paths.customers:
+        return FadeRoute(page: HomeScreen());
+
+      case _Paths.metrics:
+        return FadeRoute(page: HomeScreen());
+
+      case _Paths.subscription:
+        return FadeRoute(page: HomeScreen());
+
+      case _Paths.items:
         return FadeRoute(page: ItemsScreen());
 
       default:

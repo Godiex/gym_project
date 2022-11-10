@@ -33,7 +33,7 @@ class LoginForm extends StatelessWidget {
     }
 
     void login(){
-      AppNavigator.push(Routes.items);
+      AppNavigator.push(Routes.home);
     }
 
     var isDark = themeCubit.isDark;
@@ -60,13 +60,13 @@ class LoginForm extends StatelessWidget {
             children: <Widget>[
               SafeArea(
                 child: Align(
-                  alignment: Alignment.topLeft,
+                  alignment: Alignment.topRight,
                   child: IconButton(
                       onPressed: () {
                         themeCubit.toggleTheme();
                       },
                       padding: EdgeInsets.only(
-                        left: 28,
+                        right: 28,
                       ),
                       icon: Icon(
                         isDark ? Icons.wb_sunny_outlined : Icons.dark_mode_outlined,
