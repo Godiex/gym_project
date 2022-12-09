@@ -1,13 +1,16 @@
-class User {
+class LogInUser {
   String? userName;
   String? password;
-  String? surname;
-  String? name;
 
-  User({
+  LogInUser({
     this.userName,
     this.password,
-    this.surname,
-    this.name,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userName': userName,
+      'password': password
+    };
+  }
 }

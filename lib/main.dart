@@ -5,6 +5,7 @@ import 'package:gym/states/item/item_bloc.dart';
 import 'package:gym/states/theme/theme_cubit.dart';
 
 import 'core/network.dart';
+import 'data/repositories/gym_owner_repository.dart';
 import 'data/repositories/item_repository.dart';
 
 void main() async {

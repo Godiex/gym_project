@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../configs/colors.dart';
 import '../../states/theme/theme_cubit.dart';
 
 // ignore: must_be_immutable
@@ -84,18 +83,26 @@ class TextFieldContainer extends StatelessWidget {
 }
 
 class RadialInput extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String label;
   final Color color;
   final IconData icon;
   final bool obscureText;
+  final String FormProperty;
+  final Map<String, dynamic> formValues;
+  final String? Function(String?)? validator;
+  final TextInputType? textInputType;
   const RadialInput({
     Key? key,
-    required this.controller,
+    this.controller,
     required this.label,
     required this.color,
     required this.icon,
     required this.obscureText,
+    required this.FormProperty,
+    required this.formValues,
+    this.validator,
+    this.textInputType
   }) : super(key: key);
 
   @override
@@ -104,6 +111,9 @@ class RadialInput extends StatelessWidget {
     var isDark = themeCubit.isDark;
     return TextFieldContainer(
       child: TextFormField(
+        validator: validator,
+        keyboardType: textInputType,
+        autovalidateMode: AutovalidateMode.onUserInteraction ,
         controller: controller,
         obscureText: obscureText,
         style: TextStyle(
@@ -127,10 +137,12 @@ class RadialInput extends StatelessWidget {
             suffix: GestureDetector(
               child: const Icon(Icons.close),
               onTap: () {
-                controller.clear();
+                controller?.clear();
               },
             )),
+        onChanged: (value) => formValues[FormProperty] = value,
       ),
     );
   }
 }
+
