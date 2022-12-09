@@ -104,7 +104,6 @@ class RadialInput extends StatelessWidget {
     var isDark = themeCubit.isDark;
     return TextFieldContainer(
       child: TextFormField(
-
         controller: controller,
         obscureText: obscureText,
         style: TextStyle(
