@@ -7,6 +7,10 @@ class _HeaderCardContent extends StatelessWidget {
     AppNavigator.push(option.route);
   }
 
+  List<MenuOption> getOptionsByRol(String rol) {
+    return menuOptions.where((element) => element.rol == rol).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
@@ -74,6 +78,8 @@ class _HeaderCardContent extends StatelessWidget {
   }
 
   Widget _buildCategories(BuildContext context) {
+    var userInfoBloc = BlocProvider.of<UserInfoBloc>(context, listen: true);
+    final UserInfo userInfo = userInfoBloc.state.userInfo;
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -84,7 +90,7 @@ class _HeaderCardContent extends StatelessWidget {
         childAspectRatio: 2.6,
         mainAxisSpacing: 15,
       ),
-      itemCount: menuOptions.length,
+      itemCount: getOptionsByRol(userInfo.typeUser).length,
       itemBuilder: (context, index) {
         return CategoryCard(
           menuOptions[index],

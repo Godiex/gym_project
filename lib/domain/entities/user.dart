@@ -14,3 +14,18 @@ class LogInUser {
     };
   }
 }
+
+class UserInfo {
+  String id;
+  String typeUser;
+
+  UserInfo({
+    this.id = "",
+    this.typeUser = "",
+  });
+
+  factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
+    typeUser: json["typeUser"],
+    id: json["userId"],
+  );
+}

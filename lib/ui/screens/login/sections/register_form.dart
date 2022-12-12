@@ -20,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
 
   final Map<String, dynamic> formValues = {
+    'identification': '',
     'names': '',
     'surnames': '',
     'email': '',
@@ -74,6 +75,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: <Widget>[
                 VSpacer(10),
                 Text("Informacion del propietario"),
+                RadialInput(
+                  color: Colors.white,
+                  icon: Icons.supervised_user_circle,
+                  label: "Numero de documento",
+                  obscureText: false,
+                  formValues: formValues,
+                  FormProperty: 'identification',
+                  validator: (value){
+                    if (value == null) return 'Este campo es requerido';
+                    return value.length < 7 || value.length > 11 ? 'Entre 8 y 10 caracteres' : null;
+                  },
+                ),
                 RadialInput(
                   color: Colors.white,
                   icon: Icons.supervised_user_circle,

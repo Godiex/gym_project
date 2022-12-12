@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym/app.dart';
 import 'package:gym/states/item/item_bloc.dart';
 import 'package:gym/states/theme/theme_cubit.dart';
+import 'package:gym/states/user_info/user_info_bloc.dart';
 
 import 'core/network.dart';
-import 'data/repositories/gym_owner_repository.dart';
 import 'data/repositories/item_repository.dart';
 
 void main() async {
@@ -27,6 +27,10 @@ void main() async {
         providers: [
           BlocProvider<ItemBloc>(
             create: (context) => ItemBloc(context.read<ItemRepository>()),
+          ),
+
+          BlocProvider<UserInfoBloc>(
+            create: (context) => UserInfoBloc(),
           ),
 
           BlocProvider<ThemeCubit>(

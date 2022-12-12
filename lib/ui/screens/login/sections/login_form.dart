@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym/configs/images.dart';
 import 'package:gym/routes.dart';
+import 'package:gym/states/user_info/user_info_bloc.dart';
 import 'package:gym/ui/screens/login/sections/register_form.dart';
 import 'package:gym/ui/widgets/app_background.dart';
 
 import '../../../../configs/colors.dart';
 import '../../../../data/repositories/user_repository.dart';
+import '../../../../domain/entities/user.dart';
 import '../../../../states/theme/theme_cubit.dart';
 import '../../../widgets/Inputs.dart';
 import '../../../widgets/button.dart';
@@ -43,8 +45,9 @@ class LoginForm extends StatelessWidget {
       FocusScope.of(context).requestFocus(FocusNode());
       final UserRepository repository = new UserDefaultRepository();
       try{
-        Response test = await repository.logIn(formValues);
-        AppNavigator.push(Routes.home, test.data);
+        UserInfo infoUser = await repository.logIn(formValues);
+        BlocProvider.of<UserInfoBloc>(context).add(LogInUserEvent(infoUser));
+        AppNavigator.push(Routes.home);
       }
       on DioError catch (_) {
         print(_);

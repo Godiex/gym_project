@@ -4,10 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym/configs/colors.dart';
 import 'package:gym/configs/images.dart';
 import 'package:gym/data/menu_options.dart';
+import 'package:gym/domain/constants/type_user.dart';
+import 'package:gym/states/user_info/user_info_bloc.dart';
 import 'package:gym/ui/widgets/app_background.dart';
 import 'package:gym/ui/widgets/search_bar.dart';
 import 'package:gym/routes.dart';
 
+import '../../../domain/entities/user.dart';
 import '../../../states/theme/theme_cubit.dart';
 import 'widgets/news_card.dart';
 import 'widgets/category_card.dart';
