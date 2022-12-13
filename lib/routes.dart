@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gym/core/fade_page_route.dart';
+import 'package:gym/ui/screens/customer/sections/register_form.dart';
 import 'package:gym/ui/screens/customer/widgets/customer.dart';
 import 'package:gym/ui/screens/home/home.dart';
 import 'package:gym/ui/screens/home/widgets/plan_customer.dart';
 import 'package:gym/ui/screens/items/items.dart';
 import 'package:gym/ui/screens/login/login.dart';
 
-enum Routes { login, customers, plans, metrics, items, subscription, home }
+enum Routes { login, customers, customerCreate, plans, metrics, items, subscription, home }
 
 class _Paths {
   static const String login = '/login';
   static const String customers = '/customers';
+  static const String customersCreate = '/customers/create';
   static const String plans = '/plans';
   static const String metrics = '/metrics';
   static const String items = '/items';
@@ -20,10 +22,11 @@ class _Paths {
   static const Map<Routes, String> _pathMap = {
     Routes.login: _Paths.login,
     Routes.customers: _Paths.customers,
+    Routes.subscription: _Paths.subscription,
     Routes.plans: _Paths.plans,
     Routes.metrics: _Paths.metrics,
     Routes.items: _Paths.items,
-    Routes.subscription: _Paths.subscription,
+    Routes.customerCreate: _Paths.customersCreate,
     Routes.home: _Paths.home
   };
 
@@ -44,6 +47,9 @@ class AppNavigator {
 
       case _Paths.customers:
         return FadeRoute(page: CustomerScreen());
+
+      case _Paths.customersCreate:
+        return FadeRoute(page: RegisterCustomer());
 
       case _Paths.metrics:
         return FadeRoute(page: HomeScreen());

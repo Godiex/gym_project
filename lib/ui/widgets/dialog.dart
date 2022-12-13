@@ -81,7 +81,7 @@ class GlobalWidgetDialog {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    createButton(function, ' $button', icon, color),
+                    createButton( () {function(); Navigator.pop(context);}, ' $button', icon, color),
                     createButton(() => Navigator.pop(context), '  Cancelar',
                         Icons.cancel, Colors.blueGrey),
                   ],

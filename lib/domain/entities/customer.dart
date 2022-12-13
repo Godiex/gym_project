@@ -5,7 +5,8 @@ import 'dart:convert';
 
 
 List<Customer> CustomerFromJson(data) {
-  return List<Customer>.from(json.decode(data).map((x) => Customer.fromJson(x)));
+  var a = List<Customer>.from(json.decode(data).map((x) => Customer.fromJson(x)));
+  return a;
 }
 
 String CustomerToJson(List<Customer> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -17,8 +18,8 @@ class Customer {
     this.surnames = "",
     this.email = "",
     this.cellPhone = "",
-    this.weight = 0,
-    this.tall = 0,
+    this.weight = "0",
+    this.tall = "0",
     this.plan,
   });
 
@@ -27,8 +28,8 @@ class Customer {
   String surnames;
   String email;
   String cellPhone;
-  int weight;
-  int tall;
+  String weight;
+  String tall;
   Plan? plan;
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
@@ -37,8 +38,8 @@ class Customer {
     surnames: json["surnames"],
     email: json["email"],
     cellPhone: json["cellPhone"],
-    weight: json["weight"],
-    tall: json["tall"],
+    weight: json["weight"].toString(),
+    tall: json["tall"].toString(),
     plan: Plan.fromJson(json["plan"]),
   );
 
