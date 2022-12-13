@@ -12,6 +12,5 @@ class UserInfoInitial extends UserInfoState {
 
 class UserInfoLoggedState extends UserInfoState {
   UserInfoLoggedState(UserInfo userInfo) : super(userInfo){
-    print("hola estoy emitiendo este evetno");
   }
 }
