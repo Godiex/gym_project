@@ -14,6 +14,7 @@ String CustomerToJson(List<Customer> data) => json.encode(List<dynamic>.from(dat
 class Customer {
   Customer({
     this.id = "",
+    this.identification = "",
     this.names = "",
     this.surnames = "",
     this.email = "",
@@ -21,9 +22,11 @@ class Customer {
     this.weight = "0",
     this.tall = "0",
     this.plan,
+    this.user
   });
 
   String id;
+  String identification;
   String names;
   String surnames;
   String email;
@@ -31,9 +34,11 @@ class Customer {
   String weight;
   String tall;
   Plan? plan;
+  CustomerUser? user;
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
     id: json["id"],
+    identification: json["identification"],
     names: json["names"],
     surnames: json["surnames"],
     email: json["email"],
@@ -41,6 +46,7 @@ class Customer {
     weight: json["weight"].toString(),
     tall: json["tall"].toString(),
     plan: Plan.fromJson(json["plan"]),
+    user: CustomerUser.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -77,4 +83,26 @@ class Plan {
     "name": name,
     "duration": duration,
   };
+}
+
+class CustomerUser {
+  String userName;
+  String password;
+
+  CustomerUser({
+    this.userName = "",
+    this.password = "",
+  });
+
+  factory CustomerUser.fromJson(Map<String, dynamic> json) => CustomerUser(
+    userName: json["userName"],
+    password: json["password"],
+  );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userName': userName,
+      'password': password
+    };
+  }
 }
