@@ -89,6 +89,8 @@ class RadialInput extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
   final String FormProperty;
+  final String? initialValue;
+  final bool? enabled;
   final Map<String, dynamic> formValues;
   final String? Function(String?)? validator;
   final TextInputType? textInputType;
@@ -102,6 +104,8 @@ class RadialInput extends StatelessWidget {
     required this.FormProperty,
     required this.formValues,
     this.validator,
+    this.initialValue,
+    this.enabled,
     this.textInputType
   }) : super(key: key);
 
@@ -115,6 +119,8 @@ class RadialInput extends StatelessWidget {
         keyboardType: textInputType,
         autovalidateMode: AutovalidateMode.onUserInteraction ,
         controller: controller,
+        initialValue: initialValue,
+        enabled: enabled,
         obscureText: obscureText,
         style: TextStyle(
             color: Colors.black.withOpacity(0.5),
