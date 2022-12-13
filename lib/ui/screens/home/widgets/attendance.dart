@@ -19,11 +19,7 @@ class AttendanceState extends State<Attendance> {
   final globalDialog = GlobalWidgetDialog();
 
   String generateStringCode() {
-    return '${Env.apiBaseUrl}/Customer/attendance';
-  }
-
-  String scanQRCode() {
-    return '${Env.apiBaseUrl}/Customer/attendance';
+    return '${Env.apiBaseUrl}/Attendance';
   }
 
   @override
@@ -50,7 +46,7 @@ class AttendanceState extends State<Attendance> {
             ),
           ),
           Expanded(
-            flex: 10,
+            flex: userInfo.typeUser == TypeUser.Admin ? 6 : 10,
             child: userInfo.typeUser == TypeUser.Admin
                 ? Container(
                     padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
@@ -66,21 +62,25 @@ class AttendanceState extends State<Attendance> {
                 : Container(
                     padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                     alignment: Alignment.topCenter,
-                    child: ScannerQRCode()),
+                    child: ScannerQRCode(context: context)),
           ),
-          if (userInfo.typeUser == TypeUser.Admin) Container(
-            padding: EdgeInsets.fromLTRB(70, 20, 70, 0),
-            alignment: Alignment.topCenter,
-            child: Text(
-              textAlign: TextAlign.center,
-              'Con éste código tus clientes podrán registrar su asistencia',
-              style: TextStyle(
-                fontSize: 16,
-                height: 1.6,
-                fontWeight: FontWeight.w500,
+          if (userInfo.typeUser == TypeUser.Admin)
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(70, 20, 70, 0),
+                alignment: Alignment.topCenter,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'Con éste código tus clientes podrán registrar su asistencia',
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.6,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
-          ),
         ],
       );
     }));
