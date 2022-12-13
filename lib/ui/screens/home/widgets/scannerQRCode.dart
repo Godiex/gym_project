@@ -34,7 +34,7 @@ class ScannerQRCodeState extends State<ScannerQRCode> {
   Future<bool> getAttendanceByCustomerId(context) async {
     userId =
         BlocProvider.of<UserInfoBloc>(context, listen: true).state.userInfo.id;
-    return await attendanceRepository!.getAtendanceByCustomerId(userId!);
+    return await attendanceRepository!.getAttendanceByCustomerId(userId!);
   }
 
   @override
@@ -185,7 +185,7 @@ class ScannerQRCodeState extends State<ScannerQRCode> {
 
   postAttendance(scanData, userId) async {
     var response = await attendanceRepository!
-        .postAtendanceByCustomerId(scanData.code, userId);
+        .postAttendanceByCustomerId(scanData.code, userId);
     if (response) {
       setState(() {
         result = scanData;

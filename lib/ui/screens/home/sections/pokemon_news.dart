@@ -9,7 +9,7 @@ class _PokemonNews extends StatelessWidget {
       physics: ClampingScrollPhysics(),
       children: <Widget>[
         _buildHeader(context),
-        _buildNews(),
+        _buildNews(context),
       ],
     );
   }
@@ -41,7 +41,40 @@ class _PokemonNews extends StatelessWidget {
     );
   }
 
-  Widget _buildNews() {
+  Widget _buildNews(context) {
+    Future<dynamic> getAttendance(context) async {
+      var userInfoBloc = BlocProvider.of<UserInfoBloc>(context, listen: true);
+      final UserInfo userInfo = userInfoBloc.state.userInfo;
+      var attendanceRepository = new AttendanceDefaultRepository();
+      return await attendanceRepository.get(userInfo.gymId);
+    }
+
+    return FutureBuilder(
+      future: getAttendance(context),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        switch (snapshot.connectionState){
+          case ConnectionState.waiting:
+            return Center(child: CircularProgressIndicator());
+          case ConnectionState.done:
+            List<Attendance> _attendance = snapshot.data;
+            return ListView.separated(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _attendance.length,
+              separatorBuilder: (context, index) => Divider(),
+              itemBuilder: (context, index) {
+                return NewsCard(
+                  title: "${_attendance[index].customer?.names} ${_attendance[index].customer?.surnames}",
+                  time: _attendance[index].entryDate.toString(),
+                  thumbnail: AppImages.male,
+                );
+              },
+            );
+          default:
+            return Text('Vuelva a la vista anterior e inténtelo de nuevo');
+        }
+      },
+    );
     return ListView.separated(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
