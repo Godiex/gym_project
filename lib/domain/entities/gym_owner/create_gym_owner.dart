@@ -1,5 +1,6 @@
 class CreateGymOwner {
   const CreateGymOwner({
+    required this.identification,
     required this.names,
     required this.surnames,
     required this.email,
@@ -10,6 +11,7 @@ class CreateGymOwner {
 
   Map<String, dynamic> toJson() {
     return {
+      'identification': identification,
       'names': names,
       'surnames': surnames,
       'email': email,
@@ -25,6 +27,7 @@ class CreateGymOwner {
     };
   }
 
+  final String identification;
   final String names;
   final String surnames;
   final String email;

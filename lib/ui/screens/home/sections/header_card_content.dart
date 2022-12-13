@@ -15,7 +15,7 @@ class _HeaderCardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
     var isDark = themeCubit.isDark;
-
+    var userInfo = (BlocProvider.of<UserInfoBloc>(context, listen: true)).state.userInfo;
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
@@ -50,16 +50,16 @@ class _HeaderCardContent extends StatelessWidget {
                     )),
               ),
             ),
-            _buildTitle(),
-            SearchBar(),
-            _buildCategories(context),
+            _buildTitle(userInfo),
+            if (userInfo.typeUser != TypeUser.Customer) SearchBar(),
+            _buildCategories(context, userInfo),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTitle() {
+  Widget _buildTitle(UserInfo userInfo) {
     return Expanded(
       child: Container(
         constraints: BoxConstraints.expand(),
@@ -77,9 +77,7 @@ class _HeaderCardContent extends StatelessWidget {
     );
   }
 
-  Widget _buildCategories(BuildContext context) {
-    var userInfoBloc = BlocProvider.of<UserInfoBloc>(context, listen: true);
-    final UserInfo userInfo = userInfoBloc.state.userInfo;
+  Widget _buildCategories(BuildContext context, UserInfo userInfo) {
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -93,8 +91,8 @@ class _HeaderCardContent extends StatelessWidget {
       itemCount: getOptionsByRol(userInfo.typeUser).length,
       itemBuilder: (context, index) {
         return CategoryCard(
-          menuOptions[index],
-          onPress: () => _onSelectCategory(menuOptions[index]),
+          getOptionsByRol(userInfo.typeUser)[index],
+          onPress: () => _onSelectCategory(getOptionsByRol(userInfo.typeUser)[index]),
         );
       },
     );

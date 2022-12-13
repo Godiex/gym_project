@@ -40,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final GymOwnerRepository repository = new GymOwnerDefaultRepository();
 
     CreateGymOwner gymOwner = CreateGymOwner(
+        identification: formValues['identification'],
         names: formValues['names'],
         surnames: formValues['surnames'],
         email: formValues['email'],
