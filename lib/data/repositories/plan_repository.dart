@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:gym/domain/entities/plan.dart';
 
 import '../../core/network.dart';
-import '../../domain/entities/user.dart';
 import '../environment/env.dart';
 
 abstract class PlanRepository {

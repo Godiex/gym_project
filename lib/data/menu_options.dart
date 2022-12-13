@@ -24,4 +24,6 @@ const List<MenuOption> menuOptions = [
   MenuOption(name: 'Planes', color: AppColors.red, route: Routes.plans, rol: TypeUser.Admin),
   MenuOption(name: 'Metricas', color: AppColors.blue, route: Routes.metrics, rol: TypeUser.Admin),
   MenuOption(name: 'Mi Subscripcion', color: AppColors.yellow, route: Routes.subscription, rol: TypeUser.Customer),
+  MenuOption(name: 'Asistencia', color: AppColors.lightGreen, route: Routes.attendance, rol: TypeUser.Customer),
+  MenuOption(name: 'Asistencia', color: AppColors.lightGreen, route: Routes.attendance, rol: TypeUser.Admin),
 ];

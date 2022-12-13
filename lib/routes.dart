@@ -7,7 +7,9 @@ import 'package:gym/ui/screens/home/widgets/plan_customer.dart';
 import 'package:gym/ui/screens/items/items.dart';
 import 'package:gym/ui/screens/login/login.dart';
 
-enum Routes { login, customers, customerCreate, plans, metrics, items, subscription, home }
+import 'ui/screens/home/widgets/attendance.dart';
+
+enum Routes { login, customers, customerCreate, plans, metrics, items, subscription, home, attendance }
 
 class _Paths {
   static const String login = '/login';
@@ -17,15 +19,17 @@ class _Paths {
   static const String metrics = '/metrics';
   static const String items = '/items';
   static const String subscription = '/subscription';
+  static const String attendance = '/attendance';
   static const String home = '/home';
 
   static const Map<Routes, String> _pathMap = {
     Routes.login: _Paths.login,
     Routes.customers: _Paths.customers,
-    Routes.subscription: _Paths.subscription,
     Routes.plans: _Paths.plans,
     Routes.metrics: _Paths.metrics,
     Routes.items: _Paths.items,
+    Routes.subscription: _Paths.subscription,
+    Routes.attendance: _Paths.attendance,
     Routes.customerCreate: _Paths.customersCreate,
     Routes.home: _Paths.home
   };
@@ -56,6 +60,9 @@ class AppNavigator {
 
       case _Paths.subscription:
         return FadeRoute(page: PlanCustomer());
+
+      case _Paths.attendance:
+        return FadeRoute(page: Attendance());
 
       case _Paths.items:
         return FadeRoute(page: ItemsScreen());
