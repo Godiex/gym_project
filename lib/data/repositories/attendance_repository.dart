@@ -22,6 +22,7 @@ class AttendanceDefaultRepository extends AttendanceRepository {
 
   @override
   Future postAtendanceByCustomerId(String route, String userId) async {
-    await networkManager.request(RequestMethod.post, route, data: {"userId": userId});
+    Response response = await networkManager.request(RequestMethod.post, route, data: {"userId": userId});
+    return response.statusCode == 200 ? userId : null;
   }
 }
