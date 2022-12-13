@@ -184,20 +184,14 @@ class ScannerQRCodeState extends State<ScannerQRCode> {
   }
 
   postAttendance(scanData, userId) async {
-    try {
-      var response = await attendanceRepository!
-          .postAtendanceByCustomerId(scanData.code, userId);
-      if (response) {
-        setState(() {
-          result = scanData;
-          this.controller?.pauseCamera();
-          registered = true;
-        });
-      }
-    } on DioError catch (_) {
-      print(_);
-    } on Exception catch (_) {
-      print(_);
+    var response = await attendanceRepository!
+        .postAtendanceByCustomerId(scanData.code, userId);
+    if (response) {
+      setState(() {
+        result = scanData;
+        this.controller?.pauseCamera();
+        registered = true;
+      });
     }
   }
 
