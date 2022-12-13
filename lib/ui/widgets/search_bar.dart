@@ -27,7 +27,7 @@ class SearchBar extends StatelessWidget {
             child: TextFormField(
               decoration: InputDecoration(
                 isDense: true,
-                hintText: 'Busca la opcione que quieras',
+                hintText: 'Busca la opción que quieras',
                 contentPadding: EdgeInsets.zero,
                 hintStyle: TextStyle(
                   fontSize: 14,

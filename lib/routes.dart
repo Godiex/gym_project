@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/core/fade_page_route.dart';
 import 'package:gym/ui/screens/customer/widgets/customer.dart';
 import 'package:gym/ui/screens/home/home.dart';
+import 'package:gym/ui/screens/home/widgets/plan_customer.dart';
 import 'package:gym/ui/screens/items/items.dart';
 import 'package:gym/ui/screens/login/login.dart';
 
@@ -48,7 +49,7 @@ class AppNavigator {
         return FadeRoute(page: HomeScreen());
 
       case _Paths.subscription:
-        return FadeRoute(page: HomeScreen());
+        return FadeRoute(page: PlanCustomer());
 
       case _Paths.items:
         return FadeRoute(page: ItemsScreen());
