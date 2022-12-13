@@ -9,6 +9,8 @@ import '../environment/env.dart';
 
 abstract class CustomerRepository {
   Future get(gymId);
+  Future create(customer);
+  Future delete(customerId);
 }
 
 class CustomerDefaultRepository extends CustomerRepository {
@@ -20,5 +22,23 @@ class CustomerDefaultRepository extends CustomerRepository {
     var uri = Uri.parse(url);
     var response = await http.get(uri);
     return CustomerFromJson(response.body);
+  }
+
+  @override
+  Future create(customer) async {
+    return await networkManager.request(
+        RequestMethod.post,
+        "${Env.apiBaseUrl}/Customer",
+        data: customer
+    );
+  }
+
+  @override
+  Future delete(customerId) async {
+    return await networkManager.request(
+        RequestMethod.delete,
+        "${Env.apiBaseUrl}/Customer",
+        data: { 'id': customerId }
+    );
   }
 }
