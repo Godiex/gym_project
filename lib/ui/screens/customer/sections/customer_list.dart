@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym/configs/colors.dart';
 import 'package:gym/data/repositories/customer_repository.dart';
 import 'package:gym/routes.dart';
+import 'package:gym/ui/screens/customer/sections/pokemon_info/customer_info.dart';
 import 'package:gym/ui/screens/customer/sections/update_form.dart';
 
 import '../../../../domain/entities/customer.dart';
@@ -157,7 +158,8 @@ class CustomCard extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.remove_red_eye, color: AppColors.blue),
-                onPressed: () {/* ... */},
+                onPressed: () {final route = MaterialPageRoute(builder: (context) => CustomerInfo(customer:  customer));
+                Navigator.push(context, route);},
               ),
               const SizedBox(width: 2),
               IconButton(
