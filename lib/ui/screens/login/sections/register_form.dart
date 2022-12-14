@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalWidgetDialog globalDialog = GlobalWidgetDialog();
 
   void createUser() async {
-    if(!formKey.currentState!.validate()){
+    if (!formKey.currentState!.validate()) {
       return;
     }
     final GymOwnerRepository repository = new GymOwnerDefaultRepository();
@@ -45,14 +45,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
         surnames: formValues['surnames'],
         email: formValues['email'],
         cellPhone: formValues['cellPhone'],
-        user: CreateUserGymOwner(userName: formValues['userName'], password: formValues['password'], typeUser: ''),
-        gym: CreateGym(name: formValues['gymName'], address: formValues['address']));
+        user: CreateUserGymOwner(
+            userName: formValues['userName'],
+            password: formValues['password'],
+            typeUser: ''),
+        gym: CreateGym(
+            name: formValues['gymName'], address: formValues['address']));
 
-    try{
+    try {
       var test = await repository.create(gymOwner.toJson());
       globalDialog.seeDialogInfo(context, 'usuario creado con exito');
-    }
-    on DioError catch (_) {
+    } on DioError catch (_) {
       print(_);
       globalDialog.seeDialogError(context, _.response?.data['message']);
     }
@@ -78,14 +81,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Text("Informacion del propietario"),
                 RadialInput(
                   color: Colors.white,
-                  icon: Icons.supervised_user_circle,
+                  icon: Icons.card_travel,
                   label: "Numero de documento",
                   obscureText: false,
                   formValues: formValues,
                   FormProperty: 'identification',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 7 || value.length > 11 ? 'Entre 8 y 10 caracteres' : null;
+                    return value.length < 7 || value.length > 11
+                        ? 'Entre 8 y 10 caracteres'
+                        : !((RegExp(r'^[\w-]+$')).hasMatch(value ?? ''))
+                            ? 'Sólo letras y números'
+                            : null;
                   },
                 ),
                 RadialInput(
@@ -95,9 +102,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: false,
                   formValues: formValues,
                   FormProperty: 'names',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4
+                        ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -107,9 +118,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: false,
                   formValues: formValues,
                   FormProperty: 'surnames',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4
+                        ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -120,9 +135,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   formValues: formValues,
                   FormProperty: 'email',
                   textInputType: TextInputType.emailAddress,
-                  validator: (value){
-                    if (value == null || value.isEmpty) return 'Este campo es requerido';
-                    return null;
+                  validator: (value) {
+                    RegExp regExp = new RegExp(
+                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                    return value == null || value.isEmpty
+                        ? 'Este campo es requerido'
+                        : !(regExp.hasMatch(value ?? ''))
+                            ? 'Debe digitar un correo válido'
+                            : null;
                   },
                 ),
                 RadialInput(
@@ -132,9 +152,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: false,
                   formValues: formValues,
                   FormProperty: 'cellPhone',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 7 || value.length > 11 ? 'Entre 8 y 10 caracteres' : null;
+                    return value.length < 7 || value.length > 11
+                        ? 'Entre 8 y 10 caracteres'
+                        : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                            ? 'Sólo números'
+                            : null;
                   },
                 ),
                 VSpacer(10),
@@ -146,9 +170,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: false,
                   formValues: formValues,
                   FormProperty: 'userName',
-                  validator: (value ){
-                    if (value == null || value.isEmpty) return 'Este campo es requerido';
-                    return null;
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Este campo es requerido';
+                    return value.length < 4 ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[\w-]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras y números'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -158,9 +186,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true,
                   formValues: formValues,
                   FormProperty: 'password',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 6 ? 'Minimo 6 caracteres' : null;
+                    return value.length < 6
+                        ? 'Minimo 6 caracteres'
+                        : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                            ? 'Al menos un número'
+                            : !((RegExp(r'[a-z]')).hasMatch(value ?? ''))
+                                ? 'Al menos una minúscula'
+                                : !((RegExp(r'[A-Z]')).hasMatch(value ?? ''))
+                                    ? 'Al menos una mayúscula'
+                                    : !((RegExp(r'[!@#$%^&*,.-/()=?¡¿{}+;:_°|<>]'))
+                                            .hasMatch(value ?? ''))
+                                        ? 'Al menos un caracter especial'
+                                        : null;
                   },
                 ),
                 VSpacer(10),
@@ -172,9 +211,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: false,
                   formValues: formValues,
                   FormProperty: 'gymName',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4
+                        ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -184,17 +227,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: false,
                   formValues: formValues,
                   FormProperty: 'address',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4
+                        ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras'
+                        : null;
                   },
                 ),
                 RadialButton(
                     color: Colors.black,
                     text: "Registrar",
                     press: createUser,
-                    textColor: Colors.white
-                ),
+                    textColor: Colors.white),
               ],
             ),
           ),

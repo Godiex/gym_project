@@ -43,30 +43,29 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
   final GlobalWidgetDialog globalDialog = GlobalWidgetDialog();
 
   void createCustomer(gymId) async {
-    if(!formKey.currentState!.validate()){
+    if (!formKey.currentState!.validate()) {
       return;
     }
     final CustomerRepository repository = new CustomerDefaultRepository();
-    try{
+    try {
       customerData["user"] = userData;
       customerData["gymId"] = gymId;
       customerData["tall"] = double.parse(customerData["tall"]);
       customerData["weight"] = double.parse(customerData["weight"]);
       await repository.create(customerData);
       globalDialog.seeDialogInfo(context, 'Cliente creado con exito');
-    }
-    on DioError catch (_) {
+    } on DioError catch (_) {
       print(_);
       globalDialog.seeDialogError(context, _.response?.data['message']);
-    }
-    on Exception catch (_) {
+    } on Exception catch (_) {
       print(_);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var userInfo = (BlocProvider.of<UserInfoBloc>(context, listen: true)).state.userInfo;
+    var userInfo =
+        (BlocProvider.of<UserInfoBloc>(context, listen: true)).state.userInfo;
 
     return Scaffold(
       appBar: AppBar(
@@ -91,9 +90,13 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: false,
                   formValues: customerData,
                   FormProperty: 'identification',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 7 || value.length > 11 ? 'Entre 8 y 10 caracteres' : null;
+                    return value.length < 7 || value.length > 11
+                        ? 'Entre 7 y 11 caracteres'
+                        : !((RegExp(r'^[\w-]+$')).hasMatch(value ?? ''))
+                            ? 'Sólo letras y números'
+                            : null;
                   },
                 ),
                 RadialInput(
@@ -103,9 +106,13 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: false,
                   formValues: customerData,
                   FormProperty: 'names',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4
+                        ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                            ? 'Sólo letras'
+                            : null;
                   },
                 ),
                 RadialInput(
@@ -115,9 +122,13 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: false,
                   formValues: customerData,
                   FormProperty: 'surnames',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4
+                        ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                            ? 'Sólo letras'
+                            : null;
                   },
                 ),
                 RadialInput(
@@ -127,8 +138,11 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: false,
                   formValues: customerData,
                   FormProperty: 'weight',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
+                    return !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                        ? 'Sólo números'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -138,8 +152,11 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: false,
                   formValues: customerData,
                   FormProperty: 'tall',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
+                    return !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                        ? 'Sólo números'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -150,9 +167,14 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   formValues: customerData,
                   FormProperty: 'email',
                   textInputType: TextInputType.emailAddress,
-                  validator: (value){
-                    if (value == null || value.isEmpty) return 'Este campo es requerido';
-                    return null;
+                  validator: (value) {
+                    RegExp regExp = new RegExp(
+                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                    return value == null || value.isEmpty
+                        ? 'Este campo es requerido'
+                        : !(regExp.hasMatch(value ?? ''))
+                            ? 'Debe digitar un correo válido'
+                            : null;
                   },
                 ),
                 RadialInput(
@@ -162,9 +184,13 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: false,
                   formValues: customerData,
                   FormProperty: 'cellPhone',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 7 || value.length > 11 ? 'Entre 8 y 10 caracteres' : null;
+                    return value.length < 7 || value.length > 11
+                        ? 'Entre 8 y 10 caracteres'
+                        : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                            ? 'Sólo números'
+                            : null;
                   },
                 ),
                 DropDownCustom(),
@@ -177,9 +203,13 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: false,
                   formValues: userData,
                   FormProperty: 'userName',
-                  validator: (value ){
-                    if (value == null || value.isEmpty) return 'Este campo es requerido';
-                    return null;
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Este campo es requerido';
+                    return value.length < 4 ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[\w-]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras y números'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -189,17 +219,29 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   obscureText: true,
                   formValues: userData,
                   FormProperty: 'password',
-                  validator: (value){
+                  validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 6 ? 'Minimo 6 caracteres' : null;
+                    return value.length < 6
+                        ? 'Minimo 6 caracteres'
+                        : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                            ? 'Al menos un número'
+                            : !((RegExp(r'[a-z]')).hasMatch(value ?? ''))
+                                ? 'Al menos una minúscula'
+                                : !((RegExp(r'[A-Z]')).hasMatch(value ?? ''))
+                                    ? 'Al menos una mayúscula'
+                                    : !((RegExp(r'[!@#$%^&*,.-/()=?¡¿{}+;:_°|<>]'))
+                                            .hasMatch(value ?? ''))
+                                        ? 'Al menos un caracter especial'
+                                        : null;
                   },
                 ),
                 RadialButton(
                     color: AppColors.blue,
                     text: "Registrar",
-                    press: () { createCustomer(userInfo.gymId); },
-                    textColor: AppColors.blue
-                ),
+                    press: () {
+                      createCustomer(userInfo.gymId);
+                    },
+                    textColor: AppColors.blue),
               ],
             ),
           ),
@@ -233,17 +275,14 @@ class DropDownCustom extends StatelessWidget {
             value: "Admin",
             dropdownColor: Colors.white,
             focusColor: Colors.amber,
-            style: TextStyle(
-              color:  Colors.black,
-              decorationColor: Colors.white
-            ),
+            style:
+                TextStyle(color: Colors.black, decorationColor: Colors.white),
             items: const [
               DropdownMenuItem(value: 'Admin', child: Text("Convesional")),
-              DropdownMenuItem(value: 'Admin2' ,child: Text("Fichos")),
-              DropdownMenuItem(value: 'Admin4',child: Text("Defensa personal"))
+              DropdownMenuItem(value: 'Admin2', child: Text("Fichos")),
+              DropdownMenuItem(value: 'Admin4', child: Text("Defensa personal"))
             ],
-            onChanged: (value) {}
-        ),
+            onChanged: (value) {}),
       ),
     );
   }
