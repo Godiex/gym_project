@@ -126,7 +126,7 @@ class _CustomerBaseStatsState extends State<_CustomerBaseStats> with SingleTicke
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Stat(animation: _progressAnimation, label: 'edad', value: 24),
+        Stat(animation: _progressAnimation, label: 'edad', value: 23),
         SizedBox(height: 14),
         Stat(animation: _progressAnimation, label: 'peso', value: weight),
         SizedBox(height: 14),

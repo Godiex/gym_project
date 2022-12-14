@@ -85,7 +85,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                 Text("Informacion del cliente"),
                 RadialInput(
                   color: Colors.white,
-                  icon: Icons.supervised_user_circle,
+                  icon: Icons.card_travel,
                   label: "Numero de documento",
                   obscureText: false,
                   formValues: customerData,
@@ -140,7 +140,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   FormProperty: 'weight',
                   validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                    return !((RegExp(r'^[0-9]+$')).hasMatch(value ?? ''))
                         ? 'Sólo números'
                         : null;
                   },
@@ -186,7 +186,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   FormProperty: 'cellPhone',
                   validator: (value) {
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 7 || value.length > 11
+                    return value.length < 8 || value.length > 10
                         ? 'Entre 8 y 10 caracteres'
                         : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
                             ? 'Sólo números'
@@ -278,7 +278,7 @@ class DropDownCustom extends StatelessWidget {
             style:
                 TextStyle(color: Colors.black, decorationColor: Colors.white),
             items: const [
-              DropdownMenuItem(value: 'Admin', child: Text("Convesional")),
+              DropdownMenuItem(value: 'Admin', child: Text("Convencional")),
               DropdownMenuItem(value: 'Admin2', child: Text("Fichos")),
               DropdownMenuItem(value: 'Admin4', child: Text("Defensa personal"))
             ],

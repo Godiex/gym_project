@@ -64,7 +64,7 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
       customerData["tall"] = double.parse(customerData["tall"]);
       customerData["weight"] = double.parse(customerData["weight"]);
       await repository.update(customerData);
-      globalDialog.seeDialogInfo(context, 'Cliente creado con exito');
+      globalDialog.seeDialogInfo(context, 'Cliente modificado con exito');
     }
     on DioError catch (_) {
       print(_);
@@ -102,7 +102,7 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                 Text("Informacion del cliente"),
                 RadialInput(
                   color: Colors.white,
-                  icon: Icons.supervised_user_circle,
+                  icon: Icons.card_travel,
                   label: "Numero de documento",
                   obscureText: false,
                   formValues: customerData,
@@ -120,7 +120,10 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   initialValue: widget.customer.names,
                   validator: (value){
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4 ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -133,7 +136,10 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   initialValue: widget.customer.surnames,
                   validator: (value){
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 4 ? 'Minimo 4 caracteres' : null;
+                    return value.length < 4 ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -146,7 +152,9 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   initialValue: widget.customer.weight,
                   validator: (value){
                     if (value == null) return 'Este campo es requerido';
-                    return null;
+                    return !((RegExp(r'^[0-9]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo números'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -159,7 +167,9 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   initialValue: widget.customer.tall,
                   validator: (value){
                     if (value == null) return 'Este campo es requerido';
-                    return null;
+                    return !((RegExp(r'^[0-9]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo números'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -172,8 +182,13 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   textInputType: TextInputType.emailAddress,
                   initialValue: widget.customer.email,
                   validator: (value){
-                    if (value == null || value.isEmpty) return 'Este campo es requerido';
-                    return null;
+                    RegExp regExp = new RegExp(
+                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                    return value == null || value.isEmpty
+                        ? 'Este campo es requerido'
+                        : !(regExp.hasMatch(value ?? ''))
+                        ? 'Debe digitar un correo válido'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -186,7 +201,10 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   initialValue: widget.customer.cellPhone,
                   validator: (value){
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 7 || value.length > 11 ? 'Entre 8 y 10 caracteres' : null;
+                    return value.length < 8 || value.length > 10 ? 'Entre 8 y 10 caracteres'
+                        : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                        ? 'Sólo números'
+                        : null;
                   },
                 ),
                 DropDownCustom(),
@@ -202,7 +220,10 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   initialValue: widget.customer.user?.userName,
                   validator: (value ){
                     if (value == null || value.isEmpty) return 'Este campo es requerido';
-                    return null;
+                    return value.length < 4 ? 'Minimo 4 caracteres'
+                        : !((RegExp(r'^[\w-]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras y números'
+                        : null;
                   },
                 ),
                 RadialInput(
@@ -215,7 +236,18 @@ class _UpdateCustomerState extends State<UpdateCustomer> {
                   initialValue: widget.customer.user?.password,
                   validator: (value){
                     if (value == null) return 'Este campo es requerido';
-                    return value.length < 6 ? 'Minimo 6 caracteres' : null;
+                    return value.length < 6
+                        ? 'Minimo 6 caracteres'
+                        : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                        ? 'Al menos un número'
+                        : !((RegExp(r'[a-z]')).hasMatch(value ?? ''))
+                        ? 'Al menos una minúscula'
+                        : !((RegExp(r'[A-Z]')).hasMatch(value ?? ''))
+                        ? 'Al menos una mayúscula'
+                        : !((RegExp(r'[!@#$%^&*,.-/()=?¡¿{}+;:_°|<>]'))
+                        .hasMatch(value ?? ''))
+                        ? 'Al menos un caracter especial'
+                        : null;
                   },
                 ),
                 RadialButton(
@@ -262,7 +294,7 @@ class DropDownCustom extends StatelessWidget {
               decorationColor: Colors.white
             ),
             items: const [
-              DropdownMenuItem(value: 'Admin', child: Text("Convesional")),
+              DropdownMenuItem(value: 'Admin', child: Text("Convencional")),
               DropdownMenuItem(value: 'Admin2' ,child: Text("Fichos")),
               DropdownMenuItem(value: 'Admin4',child: Text("Defensa personal"))
             ],

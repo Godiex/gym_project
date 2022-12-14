@@ -156,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (value == null) return 'Este campo es requerido';
                     return value.length < 7 || value.length > 11
                         ? 'Entre 8 y 10 caracteres'
-                        : !((RegExp(r'[0-9]')).hasMatch(value ?? ''))
+                        : !((RegExp(r'^[0-9]+$')).hasMatch(value ?? ''))
                             ? 'Sólo números'
                             : null;
                   },
@@ -206,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Text("Datos del Gym"),
                 RadialInput(
                   color: Colors.white,
-                  icon: Icons.supervised_user_circle,
+                  icon: Icons.sports_gymnastics,
                   label: "Nombre del gimnacio",
                   obscureText: false,
                   formValues: formValues,
@@ -231,8 +231,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (value == null) return 'Este campo es requerido';
                     return value.length < 4
                         ? 'Minimo 4 caracteres'
-                        : !((RegExp(r'^[a-zA-Z ]+$')).hasMatch(value ?? ''))
-                        ? 'Sólo letras'
+                        : !((RegExp(r'^[\w- ]+$')).hasMatch(value ?? ''))
+                        ? 'Sólo letras y números'
                         : null;
                   },
                 ),
