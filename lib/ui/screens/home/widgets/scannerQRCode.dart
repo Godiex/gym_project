@@ -62,10 +62,7 @@ class ScannerQRCodeState extends State<ScannerQRCode> {
                       ? _buildQrView(context)
                       : Container(
                           alignment: Alignment.center,
-                          child: Text(
-                            registered
-                                ? 'Ya se ha registrado tu asistencia para hoy'
-                                : 'Tu asistencia se registró exitosamente',
+                          child: Text('Ya se registró tu asistencia para hoy',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -186,11 +183,10 @@ class ScannerQRCodeState extends State<ScannerQRCode> {
   postAttendance(scanData, userId) async {
     var response = await attendanceRepository!
         .postAttendanceByCustomerId(scanData.code, userId);
-    if (response) {
+    if (response != null) {
       setState(() {
         result = scanData;
         this.controller?.pauseCamera();
-        registered = true;
       });
     }
   }
